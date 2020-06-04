@@ -1,0 +1,34 @@
+<main>
+  <section class="main-content">
+    <h1>TODO List</h1>
+    <p class="about">A place to store your todos</p>
+    <form class="form">
+      <input class="input" type="text" name="filter" placeholder="Filter your to-dos" />
+    </form>
+    <ol class="ordered-list">
+      <li class="list-item" *ngFor="let todo of todos; index as i">
+        <div class="todo-container">
+          <button *ngIf="!todo.completed" class="complete-btn">
+            Complete
+          </button>
+          <p class="task" [ngClass]="{ completed: todo.completed }">
+            {{ todo.task }}
+          </p>
+          <button (click)="deleteTodo(todo.id)">X</button>
+
+          <button *ngIf="showIndex != i" (click)="showForm(i)">SHOW FORM</button>
+
+          <form *ngIf="showIndex === i" #updateForm="ngForm" (ngSubmit)="updateTodo(updateForm, todo)">
+            <label for="task">Update Task</label>
+            <input type="text" name="task" id="task" ngModel />
+            <button>UPDATE</button>
+          </form>
+        </div>
+      </li>
+    </ol>
+    <form #addForm="ngForm" (ngSubmit)="addTodo(addForm)" class="form">
+      <input class="input" type="text" name="todo" placeholder="Add your to-do" ngModel />
+      <button class="add-btn">Add</button>
+    </form>
+  </section>
+</main>
